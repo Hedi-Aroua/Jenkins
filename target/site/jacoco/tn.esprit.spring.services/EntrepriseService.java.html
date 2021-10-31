@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EntrepriseService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">timesheet-ci</a> &gt; <a href="index.source.html" class="el_package">tn.esprit.spring.services</a> &gt; <span class="el_source">EntrepriseService.java</span></div><h1>EntrepriseService.java</h1><pre class="source lang-java linenums">package tn.esprit.spring.services;
+
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.repository.IEntrepriseRepository;
+
+@Service
+<span class="fc" id="L14">public class EntrepriseService implements IEntrepriseService{</span>
+	
+	@Autowired
+	IEntrepriseRepository entrepriseRepository;
+	
+<span class="fc" id="L19">	private static final Logger l = LogManager.getLogger(EntrepriseService.class);</span>
+
+
+	@Override
+	public List&lt;Entreprise&gt; retrieveAllEntreprise() {
+		
+<span class="fc" id="L25">		List&lt;Entreprise&gt; entreprises = null; </span>
+		try {
+	
+<span class="fc" id="L28">			l.info(&quot;In retrieveAllEntreprise() : &quot;);</span>
+<span class="fc" id="L29">			entreprises = (List&lt;Entreprise&gt;) entrepriseRepository.findAll();  </span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">			for (Entreprise entreprise : entreprises) {</span>
+<span class="fc" id="L31">				l.debug(&quot;entreprise +++ : &quot; + entreprise);</span>
+<span class="fc" id="L32">			} </span>
+<span class="fc" id="L33">			l.info(&quot;Out of retrieveAllEntreprise() : &quot;);</span>
+<span class="nc" id="L34">		}catch (Exception e) {</span>
+<span class="nc" id="L35">			l.error(&quot;Error in retrieveAllEntreprise() : &quot; + e);</span>
+<span class="fc" id="L36">		}</span>
+
+<span class="fc" id="L38">		return entreprises;</span>
+	}
+
+	@Override
+	public Entreprise ajouterEntreprise(Entreprise e) {
+<span class="fc" id="L43">		Entreprise es = new Entreprise();</span>
+		try{
+<span class="fc" id="L45">		l.info(&quot;In ajouterEntreprise() : &quot;);</span>
+<span class="fc" id="L46">		es = entrepriseRepository.save(e);</span>
+<span class="fc" id="L47">		l.debug(&quot;entreprise : &quot; + es);</span>
+<span class="fc" id="L48">		l.info(&quot;Out ajouterEntreprise() : &quot;);</span>
+<span class="nc" id="L49">		}catch (Exception ex){</span>
+<span class="nc" id="L50">			l.error(&quot;Error in ajouterEntreprise() : &quot; +ex);</span>
+<span class="fc" id="L51">		}</span>
+<span class="fc" id="L52">		return es;</span>
+	}
+
+	@Override
+	public void deleteEntreprise(long id) {
+		try{
+<span class="fc" id="L58">			l.info(&quot;In deleteEntreprise() :&quot; );</span>
+<span class="nc" id="L59">			entrepriseRepository.deleteById(id);</span>
+<span class="nc" id="L60">			l.info(&quot;Out deleteEntreprise() :&quot;);</span>
+			
+<span class="fc" id="L62">		}catch (Exception e){</span>
+<span class="fc" id="L63">			l.error(&quot;Error in deleteEntreprise() : &quot; +e);</span>
+<span class="nc" id="L64">		}		</span>
+<span class="fc" id="L65">	}</span>
+
+	@Override
+	public Entreprise updateEntreprise(Entreprise e) {
+<span class="fc" id="L69">		Entreprise es = new Entreprise();</span>
+		try{
+<span class="fc" id="L71">		l.info(&quot;In ajouterEntreprise() : &quot;);</span>
+<span class="fc" id="L72">		es = entrepriseRepository.save(e);</span>
+<span class="fc" id="L73">		l.debug(&quot;entreprise : &quot; + es);</span>
+<span class="nc" id="L74">		}catch (Exception ex){</span>
+<span class="nc" id="L75">			l.error(&quot;Error in ajouterEntreprise() : &quot; +ex);</span>
+<span class="fc" id="L76">		}</span>
+<span class="fc" id="L77">		return es;</span>
+	}
+
+
+	@Override
+	public Entreprise getEntrepriseById(long id) {
+<span class="fc" id="L83">		l.info(&quot;in  retrieveEntreprise id = &quot; + id);</span>
+<span class="fc" id="L84">		Entreprise c =  entrepriseRepository.findById(id).orElse(null); </span>
+<span class="fc" id="L85">		l.info(&quot;entreprise returned : &quot; + c);</span>
+<span class="fc" id="L86">		return c; </span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
